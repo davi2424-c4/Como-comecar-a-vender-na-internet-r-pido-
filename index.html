@@ -1,27 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Stan Davies Original Free Kick Challenge</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: monospace;
-      text-align: center;
-    }
-    canvas {
-      background: #111;
-      display: block;
-      margin: auto;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Giovana ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Elementos flutuantes */
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Cartas */
+        .letter {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border: 1px solid #ffccd5;
+            margin: 10px 0;
+        }
+
+        .letter-content {
+            display: none;
+        }
+
+        .letter:hover {
+            transform: scale(1.02);
+        }
+
+        .heart-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Botões */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-yes {
+            background-color: #ff6b81;
+            color: white;
+        }
+
+        .btn-no {
+            background-color: #ddd;
+            color: #555;
+        }
+
+        .btn-yes:hover {
+            background-color: #ff4757;
+            transform: scale(1.05);
+        }
+
+        .btn-no:hover {
+            background-color: #ccc;
+        }
+
+        /* Explosões */
+        .explosion {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            display: none;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 20px;
+            animation: explode 1.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Mensagens finais */
+        .final-message {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #d23669;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Corações pulsantes */
+        .pulsing-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: pulseHeart 2s infinite;
+            opacity: 0.7;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        @keyframes pulseHeart {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Stan Davies Original Free Kick Challenge</h1>
-  <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <script src="game.js"></script>
+    <!-- Elementos flutuantes -->
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <!-- Primeira carta -->
+    <div class="letter" id="letter1">
+        <div class="heart-icon">💌</div>
+        <h2>Clique para abrir</h2>
+        <div class="letter-content" id="letter1Content">
+            <h2>Giovana, eu te amo demais,</h2>
+            <p>eu faria de tudo para continuar com você ♥️</p>
+        </div>
+    </div>
+
+    <!-- Segunda carta (aparece depois) -->
+    <div class="letter" id="letter2" style="display: none;">
+        <div class="heart-icon">💌</div>
+        <h2>Clique para abrir</h2>
+        <div class="letter-content" id="letter2Content">
+            <h2>Você aceita continuar comigo?</h2>
+            <div class="buttons">
+                <button class="btn btn-yes" id="btnYes">Sim</button>
+                <button class="btn btn-no" id="btnNo">Não</button>
+            </div>
+            <div class="final-message" id="finalMessage"></div>
+        </div>
+    </div>
+
+    <!-- Explosão de flores -->
+    <div class="explosion" id="flowerExplosion"></div>
+
+    <!-- Explosão de corações -->
+    <div class="explosion" id="heartExplosion"></div>
+
+    <script>
+        // Elementos flutuantes iniciais
+        const floatingElements = document.getElementById('floatingElements');
+        const elements = ['❤️', '🌸', '🌹', '💐', '🌼'];
+        
+        for (let i = 0; i < 20; i++) {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            element.innerHTML = elements[Math.floor(Math.random() * elements.length)];
+            element.style.left = `${Math.random() * 100}%`;
+            element.style.top = `${Math.random() * 100}%`;
+            element.style.fontSize = `${Math.random() * 20 + 10}px`;
+            element.style.animationDelay = `${Math.random() * 5}s`;
+            floatingElements.appendChild(element);
+        }
+
+        // Referências aos elementos
+        const letter1 = document.getElementById('letter1');
+        const letter1Content = document.getElementById('letter1Content');
+        const letter2 = document.getElementById('letter2');
+        const letter2Content = document.getElementById('letter2Content');
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const finalMessage = document.getElementById('finalMessage');
+        const flowerExplosion = document.getElementById('flowerExplosion');
+        const heartExplosion = document.getElementById('heartExplosion');
+
+        // Primeira carta clicada
+        letter1.addEventListener('click', function() {
+            letter1Content.style.display = 'block';
+            letter1.querySelector('h2').style.display = 'none';
+            
+            // Após 3 segundos, mostra a segunda carta
+            setTimeout(() => {
+                letter2.style.display = 'block';
+                explodeFlowers();
+            }, 3000);
+        });
+
+        // Segunda carta clicada
+        letter2.addEventListener('click', function() {
+            letter2Content.style.display = 'block';
+            letter2.querySelector('h2').style.display = 'none';
+        });
+
+        // Explosão de flores
+        function explodeFlowers() {
+            flowerExplosion.style.display = 'block';
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.className = 'particle';
+                    flower.innerHTML = elements[Math.floor(Math.random() * 4) + 1]; // Apenas flores
+                    flower.style.left = `${50 + (Math.random() - 0.5) * 30}%`;
+                    flower.style.top = `${50 + (Math.random() - 0.5) * 30}%`;
+                    flower.style.animationDelay = `${i * 0.02}s`;
+                    flowerExplosion.appendChild(flower);
+                    
+                    setTimeout(() => {
+                        flower.remove();
+                    }, 1500);
+                }, i * 20);
+            }
+        }
+
+        // Explosão de corações
+        function explodeHearts() {
+            heartExplosion.style.display = 'block';
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'particle';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = `${Math.random() * 100}%`;
+                    heart.style.top = `${Math.random() * 100}%`;
+                    heart.style.animationDelay = `${i * 0.02}s`;
+                    heartExplosion.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 1500);
+                }, i * 20);
+            }
+        }
+
+        // Cria corações pulsantes
+        function createPulsingHearts() {
+            for (let i = 0; i < 8; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'pulsing-heart';
+                heart.innerHTML = '❤️';
+                heart.style.animationDelay = `${i * 0.2}s`;
+                
+                const angle = (i / 8) * Math.PI * 2;
+                const radius = 100;
+                heart.style.left = `calc(50% + ${Math.cos(angle) * radius}px)`;
+                heart.style.top = `calc(50% + ${Math.sin(angle) * radius}px)`;
+                
+                document.body.appendChild(heart);
+            }
+        }
+
+        // Botão Sim (escolha única)
+        btnYes.addEventListener('click', function() {
+            explodeHearts();
+            finalMessage.innerHTML = "Obrigado por aceitar,<br>vamos ser muito felizes juntos ♥️";
+            finalMessage.style.display = 'block';
+            btnYes.style.display = 'none';
+            btnNo.style.display = 'none';
+            createPulsingHearts();
+            
+            // Desativa o outro botão
+            this.removeEventListener('click', arguments.callee);
+        });
+
+        // Botão Não (escolha única)
+        btnNo.addEventListener('click', function() {
+            btnNo.textContent = "MUITOOOO";
+            setTimeout(() => {
+                finalMessage.textContent = "Me mande mensagem para falarmos melhor... 😊";
+                finalMessage.style.display = 'block';
+                btnYes.style.display = 'none';
+                btnNo.style.display = 'none';
+            }, 1000);
+            
+            // Desativa o outro botão
+            this.removeEventListener('click', arguments.callee);
+        });
+    </script>
 </body>
-</html>
+  </html>
