@@ -3,326 +3,437 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Giovana ❤️</title>
+    <title>Convite Especial</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #fff5f5;
+            background-color: #0a043c;
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             overflow: hidden;
-            position: relative;
+            color: white;
         }
 
-        /* Elementos flutuantes */
-        .floating-element {
+        .stars {
             position: absolute;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            z-index: 0;
-            animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
         }
 
-        /* Cartas */
-        .letter {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 300px;
-            padding: 20px;
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .invitation {
+            background: linear-gradient(135deg, #3a0ca3, #7209b7);
+            border-radius: 15px;
+            padding: 30px;
+            width: 320px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
             transition: transform 0.3s;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-            border: 1px solid #ffccd5;
-            margin: 10px 0;
+            z-index: 10;
         }
 
-        .letter-content {
+        .invitation:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff0, #f0f, #0ff, #f00);
+            background-size: 400%;
+            opacity: 0;
+            transition: 0.5s;
+            animation: animate 20s linear infinite;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        @keyframes animate {
+            0% { background-position: 0 0; }
+            50% { background-position: 300% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .invitation:hover:before {
+            opacity: 0.3;
+        }
+
+        .invitation:hover {
+            transform: scale(1.05);
+        }
+
+        .invitation h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .invitation-content {
             display: none;
+            animation: fadeIn 1s;
         }
 
-        .letter:hover {
-            transform: scale(1.02);
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .heart-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-            animation: pulse 1.5s infinite;
+        .countdown {
+            font-size: 18px;
+            margin: 15px 0;
+            font-weight: bold;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        /* Botões */
         .buttons {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .btn {
-            padding: 8px 20px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 20px;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
         }
 
         .btn-yes {
-            background-color: #ff6b81;
+            background-color: #4cc9f0;
             color: white;
         }
 
         .btn-no {
-            background-color: #ddd;
-            color: #555;
+            background-color: #f72585;
+            color: white;
         }
 
-        .btn-yes:hover {
-            background-color: #ff4757;
-            transform: scale(1.05);
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .btn-no:hover {
-            background-color: #ccc;
+        .heart {
+            font-size: 40px;
+            margin: 10px 0;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
         }
 
-        /* Explosões */
-        .explosion {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-            display: none;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
-        .particle {
-            position: absolute;
-            font-size: 20px;
-            animation: explode 1.5s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes explode {
-            0% { transform: scale(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
-        }
-
-        /* Mensagens finais */
-        .final-message {
+        /* Calendário */
+        .calendar-container {
             display: none;
             margin-top: 20px;
+            animation: fadeIn 0.5s;
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .calendar th {
+            padding: 8px;
+            background-color: #4a148c;
+            color: white;
+        }
+
+        .calendar td {
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #3a0ca3;
+        }
+
+        .calendar td:hover {
+            background-color: #7209b7;
+        }
+
+        .calendar td.disabled {
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        .selected-date {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .month-selector button {
+            background: none;
+            border: none;
+            color: white;
             font-size: 18px;
-            color: #d23669;
-            animation: fadeIn 1s ease-in;
+            cursor: pointer;
+            padding: 5px 10px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Corações pulsantes */
-        .pulsing-heart {
-            position: absolute;
-            font-size: 30px;
-            animation: pulseHeart 2s infinite;
-            opacity: 0.7;
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        @keyframes pulseHeart {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        .month-selector button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <!-- Elementos flutuantes -->
-    <div class="floating-elements" id="floatingElements"></div>
+    <div class="stars" id="stars"></div>
 
-    <!-- Primeira carta -->
-    <div class="letter" id="letter1">
-        <div class="heart-icon">💌</div>
-        <h2>Clique para abrir</h2>
-        <div class="letter-content" id="letter1Content">
-            <h2>Giovana, eu te amo demais,</h2>
-            <p>eu faria de tudo para continuar com você ♥️</p>
-        </div>
-    </div>
-
-    <!-- Segunda carta (aparece depois) -->
-    <div class="letter" id="letter2" style="display: none;">
-        <div class="heart-icon">💌</div>
-        <h2>Clique para abrir</h2>
-        <div class="letter-content" id="letter2Content">
-            <h2>Você aceita continuar comigo?</h2>
+    <div class="invitation" id="invitation">
+        <div class="heart">💌</div>
+        <h2>Convite Especial</h2>
+        <p>Clique para abrir</p>
+        
+        <div class="invitation-content" id="invitationContent">
+            <h3>Vamos sair?</h3>
+            <p>Que tal um jantar especial?</p>
+            <div class="countdown" id="countdown"></div>
             <div class="buttons">
-                <button class="btn btn-yes" id="btnYes">Sim</button>
-                <button class="btn btn-no" id="btnNo">Não</button>
+                <button class="btn btn-yes" id="btnYes">Aceitar</button>
+                <button class="btn btn-no" id="btnNo">Talvez outro dia</button>
             </div>
-            <div class="final-message" id="finalMessage"></div>
+
+            <div class="calendar-container" id="calendarContainer">
+                <div class="month-selector">
+                    <button id="prevMonth">&lt;</button>
+                    <h4 id="currentMonth">Junho 2025</h4>
+                    <button id="nextMonth">&gt;</button>
+                </div>
+                <table class="calendar" id="calendar">
+                    <thead>
+                        <tr>
+                            <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendarBody"></tbody>
+                </table>
+                <div class="selected-date" id="selectedDate"></div>
+                <button class="btn btn-yes" id="confirmDate" style="margin-top: 15px; display: none;">Confirmar Data</button>
+            </div>
         </div>
     </div>
-
-    <!-- Explosão de flores -->
-    <div class="explosion" id="flowerExplosion"></div>
-
-    <!-- Explosão de corações -->
-    <div class="explosion" id="heartExplosion"></div>
 
     <script>
-        // Elementos flutuantes iniciais
-        const floatingElements = document.getElementById('floatingElements');
-        const elements = ['❤️', '🌸', '🌹', '💐', '🌼'];
-        
-        for (let i = 0; i < 20; i++) {
-            const element = document.createElement('div');
-            element.className = 'floating-element';
-            element.innerHTML = elements[Math.floor(Math.random() * elements.length)];
-            element.style.left = `${Math.random() * 100}%`;
-            element.style.top = `${Math.random() * 100}%`;
-            element.style.fontSize = `${Math.random() * 20 + 10}px`;
-            element.style.animationDelay = `${Math.random() * 5}s`;
-            floatingElements.appendChild(element);
+        // Criar estrelas
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = `${Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            starsContainer.appendChild(star);
         }
 
-        // Referências aos elementos
-        const letter1 = document.getElementById('letter1');
-        const letter1Content = document.getElementById('letter1Content');
-        const letter2 = document.getElementById('letter2');
-        const letter2Content = document.getElementById('letter2Content');
+        // Abrir convite
+        const invitation = document.getElementById('invitation');
+        const invitationContent = document.getElementById('invitationContent');
+        
+        invitation.addEventListener('click', function() {
+            if (invitationContent.style.display === 'none' || !invitationContent.style.display) {
+                invitationContent.style.display = 'block';
+                invitation.querySelector('p').style.display = 'none';
+            }
+        });
+
+        // Variáveis do calendário
+        let currentDate = new Date(2025, 5, 28); // 28 de Junho de 2025
+        let selectedDate = null;
+
+        // Elementos do calendário
+        const calendarBody = document.getElementById('calendarBody');
+        const currentMonthElement = document.getElementById('currentMonth');
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+        const selectedDateElement = document.getElementById('selectedDate');
+        const confirmDateBtn = document.getElementById('confirmDate');
+        const calendarContainer = document.getElementById('calendarContainer');
+
+        // Botões de resposta
         const btnYes = document.getElementById('btnYes');
         const btnNo = document.getElementById('btnNo');
-        const finalMessage = document.getElementById('finalMessage');
-        const flowerExplosion = document.getElementById('flowerExplosion');
-        const heartExplosion = document.getElementById('heartExplosion');
-
-        // Primeira carta clicada
-        letter1.addEventListener('click', function() {
-            letter1Content.style.display = 'block';
-            letter1.querySelector('h2').style.display = 'none';
-            
-            // Após 3 segundos, mostra a segunda carta
-            setTimeout(() => {
-                letter2.style.display = 'block';
-                explodeFlowers();
-            }, 3000);
+        
+        btnYes.addEventListener('click', function() {
+            selectedDate = new Date(); // Data atual como padrão se aceitar direto
+            updateCountdown();
+            alert("Maravilha! Mal posso esperar por esse encontro ❤️");
+            createHearts();
+        });
+        
+        btnNo.addEventListener('click', function() {
+            calendarContainer.style.display = 'block';
+            renderCalendar();
         });
 
-        // Segunda carta clicada
-        letter2.addEventListener('click', function() {
-            letter2Content.style.display = 'block';
-            letter2.querySelector('h2').style.display = 'none';
-        });
-
-        // Explosão de flores
-        function explodeFlowers() {
-            flowerExplosion.style.display = 'block';
+        // Renderizar calendário
+        function renderCalendar() {
+            calendarBody.innerHTML = '';
             
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    const flower = document.createElement('div');
-                    flower.className = 'particle';
-                    flower.innerHTML = elements[Math.floor(Math.random() * 4) + 1]; // Apenas flores
-                    flower.style.left = `${50 + (Math.random() - 0.5) * 30}%`;
-                    flower.style.top = `${50 + (Math.random() - 0.5) * 30}%`;
-                    flower.style.animationDelay = `${i * 0.02}s`;
-                    flowerExplosion.appendChild(flower);
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            currentMonthElement.textContent = new Date(year, month, 1).toLocaleDateString('pt-BR', { 
+                month: 'long', 
+                year: 'numeric' 
+            }).replace(/^\w/, c => c.toUpperCase());
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            let date = 1;
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement('tr');
+                
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement('td');
                     
-                    setTimeout(() => {
-                        flower.remove();
-                    }, 1500);
-                }, i * 20);
+                    if (i === 0 && j < firstDay) {
+                        cell.textContent = '';
+                    } else if (date > daysInMonth) {
+                        cell.textContent = '';
+                    } else {
+                        cell.textContent = date;
+                        
+                        const cellDate = new Date(year, month, date);
+                        
+                        // Desabilitar dias antes de 28 de junho de 2025
+                        if (cellDate < new Date(2025, 5, 28)) {
+                            cell.classList.add('disabled');
+                        } else {
+                            cell.addEventListener('click', () => selectDate(cellDate));
+                            
+                            if (selectedDate && 
+                                cellDate.getDate() === selectedDate.getDate() && 
+                                cellDate.getMonth() === selectedDate.getMonth() && 
+                                cellDate.getFullYear() === selectedDate.getFullYear()) {
+                                cell.style.backgroundColor = '#4cc9f0';
+                                cell.style.color = 'white';
+                            }
+                        }
+                        
+                        date++;
+                    }
+                    
+                    row.appendChild(cell);
+                }
+                
+                calendarBody.appendChild(row);
+                
+                if (date > daysInMonth) break;
             }
         }
 
-        // Explosão de corações
-        function explodeHearts() {
-            heartExplosion.style.display = 'block';
+        // Selecionar data
+        function selectDate(date) {
+            selectedDate = date;
+            renderCalendar();
             
-            for (let i = 0; i < 50; i++) {
+            selectedDateElement.textContent = `Data selecionada: ${date.toLocaleDateString('pt-BR', { 
+                weekday: 'long', 
+                day: 'numeric', 
+                month: 'long' 
+            })}`;
+            
+            confirmDateBtn.style.display = 'inline-block';
+        }
+
+        // Confirmar data
+        confirmDateBtn.addEventListener('click', function() {
+            calendarContainer.style.display = 'none';
+            updateCountdown();
+            alert(`Ótimo! Nos vemos dia ${selectedDate.toLocaleDateString('pt-BR')} ❤️`);
+            createHearts();
+        });
+
+        // Navegação do calendário
+        prevMonthBtn.addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        });
+
+        nextMonthBtn.addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        });
+
+        // Atualizar contagem regressiva
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            
+            function update() {
+                const now = new Date();
+                const diff = selectedDate - now;
+                
+                if (diff <= 0) {
+                    countdownElement.innerHTML = "O grande dia chegou!";
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                countdownElement.innerHTML = `
+                    Faltam: <br>
+                    ${days} dias ${hours} horas<br>
+                    ${minutes} minutos ${seconds} segundos
+                `;
+            }
+            
+            update();
+            setInterval(update, 1000);
+        }
+
+        // Criar corações
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
-                    heart.className = 'particle';
                     heart.innerHTML = '❤️';
+                    heart.style.position = 'absolute';
                     heart.style.left = `${Math.random() * 100}%`;
                     heart.style.top = `${Math.random() * 100}%`;
-                    heart.style.animationDelay = `${i * 0.02}s`;
-                    heartExplosion.appendChild(heart);
-                    
-                    setTimeout(() => {
-                        heart.remove();
-                    }, 1500);
-                }, i * 20);
+                    heart.style.fontSize = `${Math.random() * 30 + 20}px`;
+                    heart.style.animation = `float ${Math.random() * 3 + 2}s infinite`;
+                    document.body.appendChild(heart);
+                }, i * 100);
             }
         }
-
-        // Cria corações pulsantes
-        function createPulsingHearts() {
-            for (let i = 0; i < 8; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'pulsing-heart';
-                heart.innerHTML = '❤️';
-                heart.style.animationDelay = `${i * 0.2}s`;
-                
-                const angle = (i / 8) * Math.PI * 2;
-                const radius = 100;
-                heart.style.left = `calc(50% + ${Math.cos(angle) * radius}px)`;
-                heart.style.top = `calc(50% + ${Math.sin(angle) * radius}px)`;
-                
-                document.body.appendChild(heart);
-            }
-        }
-
-        // Botão Sim (escolha única)
-        btnYes.addEventListener('click', function() {
-            explodeHearts();
-            finalMessage.innerHTML = "Obrigado por aceitar,<br>vamos ser muito felizes juntos ♥️";
-            finalMessage.style.display = 'block';
-            btnYes.style.display = 'none';
-            btnNo.style.display = 'none';
-            createPulsingHearts();
-            
-            // Desativa o outro botão
-            this.removeEventListener('click', arguments.callee);
-        });
-
-        // Botão Não (escolha única)
-        btnNo.addEventListener('click', function() {
-            btnNo.textContent = "MUITOOOO";
-            setTimeout(() => {
-                finalMessage.textContent = "Me mande mensagem para falarmos melhor... 😊";
-                finalMessage.style.display = 'block';
-                btnYes.style.display = 'none';
-                btnNo.style.display = 'none';
-            }, 1000);
-            
-            // Desativa o outro botão
-            this.removeEventListener('click', arguments.callee);
-        });
     </script>
 </body>
-  </html>
+</html>
